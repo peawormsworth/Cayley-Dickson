@@ -22,6 +22,29 @@ Sample Usage:
 
     my $unit_octonion = $octonion / $octonion
 
+    print qq{
+       Q1 = $quaternion1
+       Q2 = $quaternion2
+
+       Q1 * Q2 = $product
+       Q1 / Q2 = $division
+       Q1 + Q2 = $sum
+       Q1 - Q2 = $difference
+
+       Sample Complex  number = $complex
+       Sample Octonion number = $octonion
+    };
+
+    # values will not always be exact.
+    # compare calculated with known results to verify your answers like this:
+    #
+    # ($calculated - expected)->norm <= $precision;
+
+    my $calculated = CayleyDickson->new(1,0) / CayleyDickson->new(0,1);
+    my $expected   = CayleyDickson->new(0,1);
+    my $precision  = 10 ** -9;
+    print "calculated value (%s) %s expected value (%s)", $calculated, $expected, ($calculated - expected)->norm <= $precision;
+
 Status:
 
     Standard Cayley-Dickson constructions using the Pt3 doubling product in common use has been tested.
@@ -47,5 +70,4 @@ COPYRIGHT AND LICENSE
     Copyright (C) 2019 by Jeff Anderson
 
 see individual license in each package under LICENSE
-
 
