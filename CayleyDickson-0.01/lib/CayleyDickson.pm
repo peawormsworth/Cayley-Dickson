@@ -35,8 +35,8 @@ use constant VERBOSE => 0;
 #
 # ref: http://jwbales.us/cdproducts.html
 #
-use constant DOUBLING_PRODUCT => 'Pt3';
 #use constant DOUBLING_PRODUCT => 'P3';
+use constant DOUBLING_PRODUCT => 'Pt3';
 
 
 
@@ -63,7 +63,7 @@ sub conjugate {
    my $a_conjugate = $m->is_complex ? $m->a : $m->a->conjugate;
    my $negative_b  = -$m->b;
 
-   (ref $m)->new($a_conjugate, $negative_b);
+   (ref $m)->new($a_conjugate, $negative_b)
 }
 
 
@@ -77,7 +77,7 @@ sub inverse {
 
    my $conjugate = $m->conjugate;
    my $norm      = $m->norm;
-   $conjugate / ($norm ** 2);
+   $conjugate / ($norm ** 2)
 }
 
 
@@ -92,7 +92,7 @@ sub norm {
    my $a = $m->is_complex ? $m->a : $m->a->norm;
    my $b = $m->is_complex ? $m->b : $m->b->norm;
 
-   sqrt($a ** 2 + $b ** 2);
+   sqrt($a ** 2 + $b ** 2)
 }
 
 
@@ -208,7 +208,7 @@ sub multiply {
    elsif ($dp eq 'Pt3') { $p = (ref $m)->new($a * $c + $ii * $ds * $b , $d  * $a  + $b  * $cs) } # <= default for REAL?
 
    printf("Calculated: (%s) x (%s) = (%s)\n", ($swap ? ($o, $m) : ($m, $o)), $p) if DEBUG;
-   return $p;
+   $p
 }
 
 
@@ -216,18 +216,6 @@ sub multiply {
 # 
 # Tensor: $a->tensor($b) = A⊗ B = (a,b)⊗ (c,d) = (ac,ad,bc,bd)
 #
-
-sub tensorOLD {
-   my ( $m, $o ) = @_;
-
-   if ($m->is_complex) {
-      (ref $m)->new($m->a * $o, $m->b * $o)
-   }
-   else {
-      (ref $m)->new($m->a->tensor($o), $m->b->tensor($o))
-   }
-}
-
 
 sub tensor {
    my ( $m, $o ) = @_;
@@ -271,7 +259,7 @@ sub new {
 # allows subclassing to modify the object pair just prior to creating the object.
 #
 
-sub prepare { shift; @_  }
+sub prepare { shift; @_ }
 
 
 
@@ -290,7 +278,7 @@ sub b { ${(shift)}[1] }
 
 sub flat {
    my $m = shift;
-   $m->is_complex ? ($m->a, $m->b) : ($m->a->flat, $m->b->flat);
+   $m->is_complex ? ($m->a, $m->b) : ($m->a->flat, $m->b->flat)
 }
 
 
@@ -332,7 +320,7 @@ sub as_polarity {
    foreach my $t ($m->flat) {
       $string .= $t > 0 ? '+' : ($t < 0 ? '-' : '0');
    }
-   $string;
+   $string
 }
 
 
@@ -361,7 +349,7 @@ sub as_e {
       }
       $i ++
    }
-   $string || '0';
+   $string || '0'
 }
 
 
@@ -692,4 +680,3 @@ CayleyDickson - create and operate with hypercomplex numbers
 1;
 
 __END__
-
